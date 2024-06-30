@@ -5,6 +5,7 @@ import ServerTable from "./components/ServerTable";
 
 const sampleServers: Server[] = [
   {
+    id: "aaaaaaaa",
     hostname: "test1",
     ipAddress: "10.1.1.1",
     username: "root",
@@ -12,6 +13,7 @@ const sampleServers: Server[] = [
     assignUser: "user1",
   },
   {
+    id: "bbbbbbbb",
     hostname: "test2",
     ipAddress: "10.1.1.2",
     username: "root",
