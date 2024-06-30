@@ -5,6 +5,8 @@ import {
   Table,
   TableCaption,
   TableContainer,
+  Tbody,
+  Td,
   Th,
   Thead,
   Tr,
@@ -16,26 +18,37 @@ interface ServerListProps {
 
 const ServerTable: React.FC<ServerListProps> = ({ servers }) => {
   return (
-    <div>
+    <>
       <Heading>Server List Table</Heading>
-      <ul>
-        <TableContainer>
-          <Table variant="simple">
-            <TableCaption>ServerTable</TableCaption>
-            <Thead>
-              <Tr>
-                <Th>number</Th>
+      <TableContainer>
+        <Table variant="simple">
+          <TableCaption>ServerTable</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>id</Th>
+              <Th>hostname</Th>
+              <Th>ipAddress</Th>
+              <Th>username</Th>
+              <Th>password</Th>
+              <Th>assignUser</Th>
+              <Th>-</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {servers.map((server) => (
+              <Tr key={server.hostname}>
+                <Td>{server.id}</Td>
+                <Td>{server.hostname}</Td>
+                <Td>{server.ipAddress}</Td>
+                <Td>{server.username}</Td>
+                <Td>{server.password}</Td>
+                <Td>{server.assignUser}</Td>
               </Tr>
-            </Thead>
-          </Table>
-        </TableContainer>
-        {servers.map((server) => (
-          <li key={server.hostname}>
-            {server.hostname} - {server.ipAddress}
-          </li>
-        ))}
-      </ul>
-    </div>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
