@@ -1,4 +1,13 @@
-import { Box, Button, Heading, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,25 +17,40 @@ const TopPage: React.FC = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserid(event.target.value);
   };
-  const handleRedirect = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (userid) {
       navigate(`/admin?userid=${userid}`);
     }
   };
   return (
     <>
-      <Heading>Top</Heading>
-      <Box p={4}>
-        <Input
-          placeholder="Enter your ID"
-          value={userid}
-          onChange={handleInputChange}
-          mb={4}
-        />
-        <Button onClick={handleRedirect} colorScheme="teal">
-          Enter
-        </Button>
-      </Box>
+      <Center height="80vh">
+        <Box
+          as="form"
+          onSubmit={handleSubmit}
+          borderWidth="1px"
+          borderRadius="lg"
+          p="6"
+          boxShadow="lg"
+        >
+          <VStack spacing="4">
+            <Heading>Welcome</Heading>
+            <FormControl>
+              <FormLabel htmlFor="userid">UserID</FormLabel>
+              <Input
+                placeholder="xxxxxxxx"
+                value={userid}
+                onChange={handleInputChange}
+                mb={4}
+              />
+            </FormControl>
+            <Button type="submit" colorScheme="teal" width="100%">
+              Enter
+            </Button>
+          </VStack>
+        </Box>
+      </Center>
     </>
   );
 };
