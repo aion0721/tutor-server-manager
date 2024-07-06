@@ -2,7 +2,7 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import "./App.css";
 import { Server } from "./Types/Server";
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import TopPage from "./pages/TopPage";
 import UserPage from "./pages/UserPage";
 import { useSearchParams } from "react-router-dom";
@@ -12,6 +12,7 @@ const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 function App() {
   const [servers, setServers] = useState<Server[]>([]);
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const userid = searchParams.get("userid");
 
   useEffect(() => {
@@ -44,7 +45,11 @@ function App() {
               boxSize={"40px"}
               marginRight={"4"}
             />
-            <Text fontSize={"xl"} fontWeight={"bold"}>
+            <Text
+              fontSize={"xl"}
+              fontWeight={"bold"}
+              onClick={() => navigate("/")}
+            >
               Tutorial Server Manager
             </Text>
           </Flex>
