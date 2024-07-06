@@ -1,12 +1,12 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import "./App.css";
 import { Server } from "./Types/Server";
-import ServerTable from "./components/ServerTable";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import TopPage from "./pages/TopPage";
 import UserPage from "./pages/UserPage";
 import { useSearchParams } from "react-router-dom";
+import AdminPage from "./pages/AdminPage";
 const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
       }
     };
     fetchServers();
-  }, []);
+  }, [userid]);
   return (
     <>
       <Flex direction={"column"} minHeight={"100vh"}>
@@ -51,8 +51,8 @@ function App() {
         </Box>
         <Box flex={"1"} padding={"4"} bg={"gray.50"}>
           <Routes>
-            <Route path="admin" element={<ServerTable servers={servers} />} />
-            <Route path="user" element={<UserPage />} />
+            <Route path="admin" element={<AdminPage servers={servers} />} />
+            <Route path="user" element={<UserPage servers={servers} />} />
             <Route path="/" element={<TopPage />} />
           </Routes>
         </Box>
