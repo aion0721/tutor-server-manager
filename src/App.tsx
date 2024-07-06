@@ -2,27 +2,27 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import "./App.css";
 import { Server } from "./Types/Server";
 import ServerTable from "./components/ServerTable";
-
-const sampleServers: Server[] = [
-  {
-    id: "aaaaaaaa",
-    hostname: "test1",
-    ipAddress: "10.1.1.1",
-    username: "root",
-    password: "password",
-    assignUser: "user1",
-  },
-  {
-    id: "bbbbbbbb",
-    hostname: "test2",
-    ipAddress: "10.1.1.2",
-    username: "root",
-    password: "password",
-    assignUser: "user2",
-  },
-];
+import { useState, useEffect } from "react";
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 function App() {
+  const [servers, setServers] = useState<Server[]>([]);
+
+  useEffect(() => {
+    const fetchServers = async () => {
+      try {
+        const response = await fetch(apiEndpoint);
+        if (!response.ok) {
+          throw new Error("Network respones was not ok");
+        }
+        const data: Server[] = await response.json();
+        setServers(data);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+    fetchServers();
+  }, []);
   return (
     <>
       <Flex direction={"column"} minHeight={"100vh"}>
@@ -40,7 +40,7 @@ function App() {
           </Flex>
         </Box>
         <Box flex={"1"} padding={"4"} bg={"gray.50"}>
-          <ServerTable servers={sampleServers}></ServerTable>
+          <ServerTable servers={servers}></ServerTable>
         </Box>
         <Box
           as="footer"
