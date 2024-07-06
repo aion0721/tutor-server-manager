@@ -20,9 +20,10 @@ const TopPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (userid) {
-      navigate(`/admin?userid=${userid}`);
+      navigate(`/user?userid=${userid}`);
     }
   };
+
   return (
     <>
       <Center height="80vh">
@@ -47,6 +48,14 @@ const TopPage: React.FC = () => {
             </FormControl>
             <Button type="submit" colorScheme="teal" width="100%">
               Enter
+            </Button>
+            <Button
+              type="button"
+              colorScheme="orange"
+              width="100%"
+              onClick={() => navigate("/admin")}
+            >
+              ADMIN
             </Button>
           </VStack>
         </Box>
