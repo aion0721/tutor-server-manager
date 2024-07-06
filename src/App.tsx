@@ -3,15 +3,25 @@ import "./App.css";
 import { Server } from "./Types/Server";
 import ServerTable from "./components/ServerTable";
 import { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import TopPage from "./pages/TopPage";
+import UserPage from "./pages/UserPage";
+import { useSearchParams } from "react-router-dom";
 const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 function App() {
   const [servers, setServers] = useState<Server[]>([]);
+  const [searchParams] = useSearchParams();
+  const userid = searchParams.get("userid");
 
   useEffect(() => {
     const fetchServers = async () => {
       try {
-        const response = await fetch(apiEndpoint);
+        let url = apiEndpoint;
+        if (userid) {
+          url += `?assignUser=${userid}`;
+        }
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Network respones was not ok");
         }
@@ -40,7 +50,11 @@ function App() {
           </Flex>
         </Box>
         <Box flex={"1"} padding={"4"} bg={"gray.50"}>
-          <ServerTable servers={servers}></ServerTable>
+          <Routes>
+            <Route path="admin" element={<ServerTable servers={servers} />} />
+            <Route path="user" element={<UserPage />} />
+            <Route path="/" element={<TopPage />} />
+          </Routes>
         </Box>
         <Box
           as="footer"
